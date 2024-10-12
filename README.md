@@ -1,174 +1,166 @@
+Here’s a suggested **README.md** for the project **HodlMyBeer**, a fraud detection system using machine learning and deep learning techniques for decentralized financial platforms:
 
+---
 
+# HodlMyBeer: Fraud Detection in DeFi
 
-# Fraud Detection in DeFi and Bitcoin Network
+## Project Overview
 
-## Overview
+**HodlMyBeer** aims to develop an advanced fraud detection system specifically designed for decentralized financial platforms like Bitcoin. Leveraging cutting-edge machine learning and deep learning models, the project seeks to identify suspicious and fraudulent transactions in Bitcoin by analyzing transactional patterns and behaviors.
 
-This repository presents two related projects focused on fraud detection in decentralized financial (DeFi) platforms and Bitcoin transactions using deep learning techniques. 
+We use the **Elliptic Dataset**, which maps Bitcoin transactions to entities (licit and illicit). This dataset provides a transaction graph from the Bitcoin blockchain, making it possible to detect illicit activities such as scams, malware, and Ponzi schemes.
 
-### 1. **Bitcoin Theft Detection**  
-   This project focuses on detecting Bitcoin theft and fraudulent activities in Bitcoin transactions by leveraging machine learning models, such as Random Forest, AdaBoost, SVM, KNN, MLP, and Graph Neural Networks (GNN). The goal is to identify abnormal transactions that indicate theft or fraud, improving the security of the Bitcoin network.
+### Key Objectives:
+1. Build a fraud detection model to identify Bitcoin theft and other illicit transactions.
+2. Apply both traditional and graph-based machine learning methods to improve detection accuracy.
+3. Mitigate the imbalance between legitimate and fraudulent transactions.
 
-### 2. **DeFi Fraud Detection**  
-   This project aims to develop a fraud detection system for DeFi platforms. DeFi platforms have revolutionized the financial world by offering decentralized, permissionless, and transparent services, but they are also vulnerable to fraud like scams, rug pulls, and malicious exploits. The fraud detection system employs deep learning approaches, including anomaly detection, classification models, and graph-based techniques, to flag suspicious activities in real-time.
+---
 
-## Key Features
+## Dataset
 
-- **Bitcoin Theft Detection:**
-    - **Feature Extraction:** Extracts key features such as transaction volume, frequency, and node centrality from Bitcoin transactions.
-    - **Supervised Learning:** Implements Random Forest, AdaBoost, KNN, SVM, and MLP models to classify transactions as normal or theft-related.
-    - **Graph-based Learning:** Implements Graph Convolutional Networks (GCN) and Graph Attention Networks (GAT) to model the relationships between Bitcoin transactions and enhance fraud detection.
-    - **Data Balancing:** Uses oversampling techniques (e.g., SMOTE) to handle class imbalance between theft and normal transactions.
+The **Elliptic Dataset** is used in this project. It maps Bitcoin transactions to real-world entities, either licit (wallet providers, miners, exchanges) or illicit (scams, malware, terrorist organizations, Ponzi schemes).  
+The dataset consists of:
+- **203,769 node transactions**
+- **234,355 directed edges** representing payment flows  
+Only **2%** of the nodes are labeled as illicit, while **21%** are classified as licit. The rest are unlabeled.
 
-- **DeFi Fraud Detection:**
-    - **Anomaly Detection:** Identifies abnormal transaction patterns using deep learning techniques.
-    - **Classification Models:** Utilizes deep learning models to classify transactions as fraudulent or non-fraudulent.
-    - **Graph-based Techniques:** Uses graph structure analysis to detect fraudulent behavior based on relationships between users and transactions on the platform.
-    - **Real-Time Fraud Detection:** Aims to identify fraud in real-time on DeFi platforms to reduce the risk of financial losses.
+### Features:
+Each node in the dataset has **166 features**, which include:
+- **94 local features:** Transaction details such as transaction fees, inputs/outputs, and average volume of Bitcoin received.
+- **72 aggregated features:** Aggregated statistics from neighboring transactions, including the maximum, minimum, and standard deviation of transactional properties.
 
-## Datasets
-
-### Bitcoin Theft Detection Dataset
-We use the **Elliptic dataset** for Bitcoin fraud detection. The dataset includes over 200,000 transactions, labeled as licit or illicit. Each transaction is represented as a node in a graph, where edges represent relationships between transactions. The dataset contains key features such as:
-- Transaction timestamps
-- Bitcoin flow between addresses
-- Identifying heuristics for illicit transactions
-
-The dataset can be accessed from [Elliptic Cryptocurrency Dataset](https://www.kaggle.com/datasets/ellipticco/elliptic-cryptocurrency-dataset).
-
-### DeFi Fraud Detection Dataset
-For the DeFi fraud detection, we also use the **Elliptic dataset**, which is structured as a graph where:
-- Nodes represent individual Bitcoin transactions.
-- Edges represent relationships between transactions.
-
-The dataset provides insights into Bitcoin flow between addresses, which can be used for fraud detection in both Bitcoin and DeFi ecosystems. The dataset can be accessed from [Elliptic Cryptocurrency Dataset](https://www.kaggle.com/datasets/ellipticco/elliptic-data-set/data).
+---
 
 ## Approach
 
-### Bitcoin Theft Detection Approach:
-1. **Data Preprocessing:**  
-   - Clean and preprocess Bitcoin transaction data, including feature extraction for transaction volume, behavior, and relationships between nodes (addresses).
-   - Apply oversampling techniques (SMOTE) to handle class imbalance, as theft events are less frequent than normal transactions.
+### Methodology:
+We employ a mix of machine learning and graph-based learning techniques to detect illicit Bitcoin transactions:
+- **Feature Extraction:** Transaction volume, node centrality, and other key characteristics.
+- **Supervised Learning Models:**  
+  - Random Forest
+  - AdaBoost
+  - Support Vector Machine (SVM)
+  - k-Nearest Neighbor (KNN)
+  - Multilayer Perceptron (MLP)
+- **Graph Neural Networks:**  
+  - Graph Convolutional Networks (GCNs)
+  - Graph Attention Networks (GATs)
+  
+These models leverage the topological structure of the blockchain to detect fraudulent activities.
 
-2. **Machine Learning Models:**
-    - **Random Forest (RF):** Robust ensemble model for detecting theft events.
-    - **AdaBoost:** Boosting model to improve weak classifiers.
-    - **KNN (K-Nearest Neighbors):** A simple model used for benchmarking.
-    - **SVM (Support Vector Machine):** Effective for binary classification tasks.
-    - **MLP (Multilayer Perceptron):** Neural network-based model for non-linear relationships.
+### Data Balancing:
+Given the imbalance in the dataset (only 2% illicit transactions), we use oversampling techniques such as **SMOTE** to balance the data and ensure that our models are not biased toward the majority class.
 
-3. **Graph Neural Networks (GCN & GAT):**  
-   Use graph-based models to capture complex relationships between transactions, treating Bitcoin transactions as nodes and relationships between them as edges.
+---
 
-4. **Evaluation:**  
-   Models are evaluated using classification metrics such as accuracy, precision, recall, F1-score, and ROC-AUC.
+## Models Used
 
-### DeFi Fraud Detection Approach:
-1. **Anomaly Detection:**  
-   Use deep learning techniques such as autoencoders and LSTM models to detect anomalies in transaction data, identifying unusual behavior indicative of fraud.
+### 1. **Random Forest (RF):** 
+   - Used for its robustness and ability to handle imbalanced data. This is our baseline model.
 
-2. **Classification Models:**  
-   Train deep learning models to classify transactions as legitimate or fraudulent based on transaction patterns.
+### 2. **AdaBoost:**
+   - Applied to improve classification of complex decision boundaries and enhance precision.
 
-3. **Graph-based Fraud Detection:**  
-   Use graph-based models like GCN and GAT to identify suspicious patterns in the relationships between users and transactions.
+### 3. **k-Nearest Neighbor (KNN):**
+   - A simple, non-parametric model used to benchmark our results.
 
-4. **Real-Time Detection:**  
-   Implement a real-time fraud detection system that can flag suspicious activities as they happen on DeFi platforms.
+### 4. **Support Vector Machine (SVM):**
+   - Effective in detecting rare events and building strong decision boundaries.
 
-## Installation
+### 5. **Multilayer Perceptron (MLP):**
+   - A deep learning model that detects non-linear relationships between transactions.
 
-### Prerequisites:
-Ensure you have the following installed:
-- Python 3.x
-- TensorFlow (for MLP and GNN models)
-- Scikit-learn (for traditional machine learning models)
-- NetworkX (for graph-based models)
-- imbalanced-learn (for oversampling)
-- Pandas, NumPy, and Matplotlib (for data processing and visualization)
+### 6. **Graph Convolutional Networks (GCN):**
+   - Incorporates node-level and structural information from the transaction graph.
 
-### Install Dependencies
-To install the required libraries, create a `requirements.txt` file and include the following:
+### 7. **Graph Attention Networks (GAT):**
+   - Dynamically assigns attention to nodes’ neighbors, capturing nuanced relationships in the transaction graph.
 
-```text
-numpy
-pandas
-matplotlib
-scikit-learn
-tensorflow
-networkx
-imbalanced-learn
-spektral
+---
+
+## Key Insights
+
+- **Feature Extraction** from transaction graphs is crucial in identifying fraudulent patterns.
+- **Supervised Learning Models** generally outperform unsupervised methods in terms of interpretability and accuracy.
+- **Graph-based Models** (GCNs, GATs) offer a unique capability to analyze the structural properties of Bitcoin transactions and improve fraud detection.
+- **Data Imbalance Techniques** like oversampling help mitigate bias toward the majority class and improve recall.
+
+---
+
+## Project Structure
+
+```
+hodlmybeer/
+│
+├── data/                      # Dataset (Elliptic Dataset)
+├── models/                    # Machine learning and GNN models
+│   ├── random_forest.py        # Random Forest implementation
+│   ├── adaboost.py             # AdaBoost implementation
+│   ├── knn.py                  # KNN implementation
+│   ├── svm.py                  # SVM implementation
+│   ├── mlp.py                  # Multilayer Perceptron implementation
+│   ├── gcn.py                  # Graph Convolutional Network implementation
+│   └── gat.py                  # Graph Attention Network implementation
+├── notebooks/                  # Jupyter notebooks for exploration
+├── scripts/                    # Preprocessing and utility scripts
+├── README.md                   # Project readme
+└── requirements.txt            # Python package dependencies
 ```
 
-Run the following command to install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
-
-### 1. Data Preprocessing:
-To preprocess the data and extract features, run the following script:
-
-```bash
-python preprocess.py
-```
-
-This script will clean and transform the raw Bitcoin transaction data into a structured format suitable for machine learning.
-
-### 2. Train Machine Learning Models:
-To train the traditional machine learning models (Random Forest, AdaBoost, KNN, SVM, MLP), use:
-
-```bash
-python train_models.py
-```
-
-This will train the models using the preprocessed dataset and save the trained models.
-
-### 3. Model Evaluation:
-To evaluate the performance of the models and generate performance metrics, run:
-
-```bash
-python evaluate_models.py
-```
-
-### 4. Graph-based Model Training (Optional):
-To train the Graph Neural Networks (GCN and GAT), use:
-
-```bash
-python train_gnn.py
-```
-
-This will create and train the GNN models for detecting fraud events based on the graph structure of Bitcoin transactions.
-
-## Expected Outcome
-
-- **Bitcoin Theft Detection:**  
-   The model will be able to classify Bitcoin transactions as either normal or theft-related. The system will improve detection accuracy by using a combination of traditional machine learning and graph-based techniques.
-
-- **DeFi Fraud Detection:**  
-   The system will identify fraudulent activities such as scams, rug pulls, and malicious exploits in DeFi platforms by analyzing user behavior, transaction patterns, and relationships between entities.
+---
 
 ## Results
 
-- **Model Performance Metrics:** A table comparing the precision, recall, F1-score, and other classification metrics of each model.
-- **Graph-based Model Accuracy:** Performance of GCN and GAT models for detecting fraud.
+- The Random Forest model serves as a strong baseline, with GNN models showing improvements in detecting complex fraud patterns.
+- Balancing the dataset significantly enhances recall for illicit transactions.
 
-## Team
+---
 
-- **Anirudh Chauhan (U20220013)**
-- **Ayush Sharma (U20220024)**
-- **Manan Chawla (U20220111)**
-- **Sakarth Brar (U20220076)**
+## How to Run
 
-## Acknowledgments
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/theayushsharmaaaa/deep-learning-project
+   cd deep-learning-project
+   ```
 
-We would like to thank **Elliptic** for providing the dataset used in both projects. The dataset has been invaluable for developing our fraud detection models.
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Contact
+3. **Run models:**
+   You can run any of the models by executing the corresponding script. For example, to run the Random Forest model:
+   ```bash
+   python models/random_forest.py
+   ```
 
-For any inquiries, please contact the project team at [manan.chawla@plaksha.edu.in].
+4. **Explore Jupyter notebooks:**
+   Explore the transaction data and models using the provided notebooks in the `notebooks/` directory.
+
+---
+
+## Future Work
+
+1. Experiment with more advanced graph-based models.
+2. Test on additional datasets or real-time Bitcoin transaction data.
+3. Implement a live fraud detection pipeline integrated with blockchain nodes.
+
+---
+
+## Contributors
+
+- Anirudh Chauhan
+- Ayush Sharma
+- Manan Chawla
+- Sakarth Singh Brar
+
+---
+
+For more details, refer to our [project repository](https://github.com/theayushsharmaaaa/deep-learning-project).
+
+---
+
+This README is designed to guide users through the project setup, methodology, and model implementations for the **HodlMyBeer** fraud detection system. Let me know if you need any further modifications!
 
