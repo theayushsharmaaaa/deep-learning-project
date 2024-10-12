@@ -1,7 +1,3 @@
-Here’s a suggested **README.md** for the project **HodlMyBeer**, a fraud detection system using machine learning and deep learning techniques for decentralized financial platforms:
-
----
-
 # HodlMyBeer: Fraud Detection in DeFi
 
 ## Project Overview
