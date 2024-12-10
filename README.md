@@ -3,95 +3,127 @@
 
 ## **Project Overview**
 
-**HodlMyBeer** initially began as an exploration of fraud detection within Bitcoin transactions. The project aimed to identify illicit activities like scams, malware, and Ponzi schemes using the **Elliptic Dataset**, which provided a transaction graph from the Bitcoin blockchain.
+**HodlMyBeer** is an innovative fraud detection project designed for decentralized financial platforms, specifically leveraging blockchain network analysis. Initially focused on detecting fraudulent activities within Bitcoin transactions using the **Elliptic Dataset**, we transitioned to the advanced **Elliptic++ Dataset** to deepen our analysis. 
 
-During our research, we discovered the **Elliptic++ Dataset**, a more comprehensive and enriched dataset designed for fraud detection in decentralized financial ecosystems. This dataset offers deeper insights into transaction patterns, wallet behaviors, and graph structures. Recognizing its potential, we transitioned our project to leverage the **Elliptic++ Dataset** for building a robust fraud detection system for decentralized finance (DeFi) platforms.
+The **Elliptic++ Dataset** provides richer and more diverse insights into the relationships between wallets and transactions, allowing for the creation of a **bipartite graph structure**. This unique dataset enables not only the identification of illicit transactions but also the detection of fraudulent wallets, making this project novel in its application to both actor-level and transaction-level fraud detection.
 
-This decision was driven by the dataset’s inclusion of both **transaction-level** and **actor-level** data, enabling more granular analysis of fraudulent behavior. Our mission is to develop a cutting-edge detection system that secures DeFi ecosystems against illicit activities.
+Our mission is to create a robust fraud detection system that harnesses cutting-edge graph neural network (GNN) techniques to improve security within decentralized finance ecosystems.
 
 ---
 
 ## **Key Objectives**
 
-1. Transition from Bitcoin-centric fraud detection to a broader DeFi fraud detection framework using **Elliptic++ Dataset**.
-2. Detect illicit wallet addresses and fraudulent transactions by analyzing graph-based features.
-3. Combine traditional machine learning methods with graph neural networks (GNNs) to enhance detection accuracy.
-4. Address the challenges of imbalanced datasets with advanced techniques like oversampling and weighted loss functions.
+1. Transition from Bitcoin transaction-specific fraud detection to a **heterogeneous graph-based detection system** using the **Elliptic++ Dataset**.
+2. Identify illicit wallet addresses and fraudulent transactions by analyzing both actor and transaction nodes within the blockchain network.
+3. Introduce novel methodologies for analyzing **bipartite graphs**, combining actor-level and transaction-level insights for a more comprehensive fraud detection framework.
+4. Address severe class imbalance with techniques like **oversampling, cost-sensitive learning, and weighted loss functions** to ensure robust model performance.
 
 ---
 
 ## **Dataset: Elliptic++**
 
-The **Elliptic++ Dataset** provides an extensive view of Bitcoin transactions, addressing both **transaction-level** and **actor-level** data. It offers detailed statistics and features that enable in-depth fraud detection.
+The **Elliptic++ Dataset** represents an enriched blockchain transaction dataset, capturing both **actor-level (wallet)** and **transaction-level** data, organized as a **heterogeneous graph**. 
 
 ### **Dataset Highlights**
 
-- **203,769 Node Transactions**
-- **234,355 Directed Edges**, representing payment flows
-- **Wallet-Level Data:** Categorization into licit and illicit wallets
-- **Feature-Rich Data:**  
-  - **166 Transaction-Level Features**
-  - **Actor-Level Attributes** detailing wallet behaviors
+- **Node Categories:**
+  - **Transactions:** ~203,769 nodes, each with 166 features.
+  - **Wallets (Actors):** ~1,268,260 nodes, each with 55 features.
+- **Edge Types:**  
+  - Transaction-to-Transaction (234,355 edges)
+  - Transaction-to-Wallet (837,124 edges)
+  - Wallet-to-Transaction (477,117 edges)
+  - Wallet-to-Wallet (2,868,964 edges)
 
 ### **Fraud Statistics**
-- **Licit Transactions:** ~21%
-- **Illicit Transactions:** ~2%
-- **Unlabeled Transactions:** ~77%
+
+- **Licit Transactions:** ~21%  
+- **Illicit Transactions:** ~2%  
+- **Unlabeled Transactions:** ~77%  
+- **Wallet Nodes:** Licit and illicit wallets with unknown statuses.
 
 ### **Features**
-- **Transaction Features:** Detailed metrics like transaction fees, input/output volume, and average Bitcoin received.
-- **Graph-Based Features:** Aggregated statistics from neighboring nodes, capturing structural insights.
+
+1. **Transaction-Level Features:**  
+   - Time step (1–49): Represents bi-weekly intervals.
+   - Localized transaction data: Input/output counts, transaction fees, and output volumes.
+   - Aggregated statistics from one-hop neighbors: Maximum, minimum, and standard deviations.
+
+2. **Actor-Level Features (Wallets):**  
+   - Behavioral characteristics: Total transactions as sender/receiver, lifetime in blocks, and average transaction values.
+
+### **Novel Contributions of the Dataset**
+
+- Introduces a **bipartite graph** structure for blockchain analysis, linking wallets and transactions.
+- Provides both **heterogeneous graph data** and a foundation for exploring **multi-relational GNNs**.
+- Captures temporal dynamics with a well-defined time-step attribute, enabling time-series analysis.
+
+---
+
+## **Novel Contributions of the Project**
+
+1. **Bipartite Graph Learning:**  
+   Our project uniquely integrates heterogeneous graph analysis, allowing for simultaneous detection of fraudulent wallets and illicit transactions.
+
+2. **Advanced GNN Architectures:**  
+   - **Heterogeneous Graph Neural Networks (Hetero-GNNs):** Process actor and transaction data as distinct node types, enhancing the detection of multi-relational fraud patterns.
+   - **Graph Attention Networks (GATs):** Dynamically prioritize relationships between nodes to capture nuanced blockchain behaviors.
+
+3. **Severe Class Imbalance Handling:**  
+   - Use of **oversampling techniques (e.g., SMOTE)** for the minority illicit class.
+   - **Weighted Cross-Entropy Loss:** Ensures models prioritize rare fraudulent patterns.
+
+4. **Visualization of Blockchain Graphs:**  
+   - Employs **NetworkX** for subgraph rendering and visual exploration.
+   - Provides an intuitive view of the blockchain network, revealing transaction and wallet connections.
 
 ---
 
 ## **Approach**
 
 ### **Methodology**
-The project uses a blend of traditional machine learning and graph-based learning approaches to detect fraud in DeFi. Key steps include:
-1. **Feature Engineering:** Extract key characteristics such as transaction volume, wallet centrality, and temporal patterns.
-2. **Model Selection:** Implement and compare performance across various models.
-3. **Graph-Based Learning:** Leverage GNNs to analyze the topological and structural properties of transaction graphs.
+
+1. **Feature Engineering:**  
+   - Extract localized and aggregated features for both transactions and wallets.
+   - Derive graph-based metrics such as node centrality and clustering coefficients.
+
+2. **Model Selection:**  
+   - Compare traditional machine learning (e.g., Random Forest, SVM) with advanced graph-based models (e.g., GCNs, GATs, Hetero-GNNs).
+
+3. **Data Balancing:**  
+   - Apply techniques like **oversampling** and **cost-sensitive learning** to mitigate class imbalance.
+
+4. **Graph-Based Learning:**  
+   - Train heterogeneous GNNs on **actor-transaction bipartite graphs**.
 
 ---
 
 ## **Models**
 
 ### **Traditional Machine Learning Models**
-- **Random Forest (RF):** Baseline model for robust performance.
-- **AdaBoost:** Boosting technique to refine decision boundaries.
-- **Support Vector Machine (SVM):** Effective for imbalanced datasets.
-- **k-Nearest Neighbors (KNN):** Benchmark for simple classification.
-- **Multilayer Perceptron (MLP):** Detects non-linear relationships in features.
+- **Random Forest:** Baseline model for robust performance.
+- **Support Vector Machine (SVM):** Handles imbalanced datasets effectively.
+- **Multilayer Perceptron (MLP):** Detects complex, non-linear relationships.
 
 ### **Graph-Based Models**
-- **Graph Convolutional Networks (GCNs):** Incorporates node and edge features to analyze transaction graphs.
-- **Graph Attention Networks (GATs):** Dynamically focuses on important neighboring nodes, capturing nuanced relationships.
-
-### **Addressing Data Imbalance**
-Given the low proportion of illicit transactions, we employ techniques like:
-- **Synthetic Minority Oversampling (SMOTE):** To balance the dataset.
-- **Weighted Loss Functions:** Prioritize minority classes during model training.
-
----
-
-## **Insights and Challenges**
-
-- **From Bitcoin to DeFi:** Transitioning to the **Elliptic++ Dataset** allowed us to adopt a more comprehensive approach to fraud detection.
-- **Graph-Based Learning:** GNNs outperform traditional models in detecting complex fraud patterns.
-- **Imbalanced Data:** Overcoming data imbalance significantly improves recall for illicit transactions.
-- **Scalability:** The models are designed to handle large-scale transaction graphs, essential for real-world DeFi platforms.
+- **Graph Convolutional Networks (GCNs):** Learn node embeddings using graph topology.
+- **Graph Attention Networks (GATs):** Assign attention scores to node relationships dynamically.
+- **Heterogeneous GNNs (Hetero-GNNs):** Handle multi-relational data for actor and transaction graphs.
 
 ---
 
 ## **Results**
 
-- **Baseline Models:**  
-  - Random Forest achieved satisfactory precision but struggled with imbalanced data.
-  - Graph-based models like GCN and GAT significantly improved illicit transaction detection, especially in terms of recall.
+### **Baseline Models:**  
+- Traditional models achieved moderate success but struggled with imbalanced data.
 
-- **Key Metrics:**  
-  - **Precision:** High precision for both licit and illicit transactions.
-  - **Recall:** Recall for illicit transactions improved after applying oversampling and weighted loss functions.
+### **Graph-Based Models:**  
+- **GCNs and GATs** significantly outperformed traditional models, leveraging graph structure.
+- **Heterogeneous GNNs** provided the most comprehensive insights, detecting fraud at both wallet and transaction levels.
+
+### **Key Metrics:**
+- **Precision:** High precision for both licit and illicit classes.
+- **Recall:** Improved recall for illicit transactions due to enhanced class balancing techniques.
 
 ---
 
@@ -109,33 +141,36 @@ Given the low proportion of illicit transactions, we employ techniques like:
    ```
 
 3. **Run Models**
-   Execute the desired model script:
    ```bash
-   python models/random_forest.py
+   python models/hetero_gnn.py
    ```
 
 4. **Explore Jupyter Notebooks**
-   The `notebooks/` directory contains EDA and model experimentation notebooks.
+   Analyze the dataset and model training in the `notebooks/` directory.
 
 ---
 
 ## **Future Directions**
 
-1. Extend fraud detection to real-time DeFi transaction data.
-2. Experiment with more advanced GNN architectures, such as Graph Isomorphism Networks (GIN).
-3. Integrate the model into a live blockchain node for on-the-fly fraud detection.
+1. Explore advanced GNNs like Graph Isomorphism Networks (GIN).
+2. Extend fraud detection to real-time transaction streams.
+3. Integrate the system with blockchain nodes for real-time fraud alerts.
+4. Analyze temporal dynamics in actor and transaction behaviors.
 
 ---
 
 ## **Contributors**
 
-- Ayush Sharma
-- Anirudh Chauhan
-- Manan Chawla
-- Sakarth Singh Brar
+- **Ayush Sharma**
+- **Anirudh Chauhan**
+- **Manan Chawla**
+- **Sakarth Singh Brar**
 
 ---
 
-For more details, refer to our [project repository](https://github.com/theayushsharmaaaa/deep-learning-project).
+## **References**
+
+- Youssef Elmougy and Ling Liu. "Demystifying Fraudulent Transactions and Illicit Nodes in the Bitcoin Network for Financial Forensics." KDD 2023.
+- [Elliptic++ Dataset Documentation](https://ellipticplusplus.org/)
 
 ---
